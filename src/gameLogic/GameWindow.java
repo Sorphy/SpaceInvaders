@@ -1,0 +1,107 @@
+package gameLogic;
+
+import javafx.application.Application;
+import javafx.event.EventHandler;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+
+public class GameWindow extends Application{
+
+	private String titleText = "Space Invaders";
+	private final int defaultSizeX = 700;
+	private final int defaultSizeY = 600;
+	private final Color defaultBackgroudColor = Color.GRAY;
+	
+	private GraphicsContext context;
+	private Canvas canvas;
+	
+	private boolean leftKeyPressed;
+	private boolean rightKeyPressed;
+	
+	
+	
+	@Override
+	public void start(Stage primaryStage) throws Exception {
+		primaryStage.setTitle(this.titleText);
+		primaryStage.setResizable(false);
+		primaryStage.setWidth(defaultSizeX);
+		primaryStage.setHeight(defaultSizeY);
+		
+		this.canvas = new Canvas(this.defaultSizeX, this.defaultSizeY);
+		this.context = canvas.getGraphicsContext2D();
+		
+		Group root = new Group();
+		root.getChildren().add(canvas);
+		
+		Scene scene = new Scene(root);
+		primaryStage.setScene(scene);
+		
+		
+		scene.setOnKeyPressed(new EventHandler<KeyEvent>(){
+			public void handle(KeyEvent e){
+				if(e.getCode() == KeyCode.RIGHT) {
+					rightKeyPressed = true;
+					System.out.println("Right key pressed");
+				}
+				if(e.getCode() == KeyCode.LEFT) {
+					leftKeyPressed = true;
+					System.out.println("Left key pressed");
+				}
+			}
+		});
+     
+        scene.setOnKeyReleased(new EventHandler<KeyEvent>(){
+        	public void handle(KeyEvent e){
+        		if(e.getCode() == KeyCode.RIGHT) {
+        				rightKeyPressed = false;
+        		}
+        		if(e.getCode() == KeyCode.LEFT) {
+        				leftKeyPressed = false;
+        		}
+        	}
+        });
+		
+		
+		
+		
+		
+		//GameLoop
+		
+		GameLoop loop = new GameLoop(this);
+		loop.start();
+		
+		//GameLoop
+		
+		primaryStage.show();
+	}
+	
+	public static void main(String[] args) {
+		launch(args);
+	}
+	
+	public double getWindowWidth() {
+		return this.canvas.getWidth();
+	}
+	
+	public double getWindowHeight() {
+		return this.canvas.getHeight();
+	}
+	
+	public GraphicsContext getGraphicsContext() {
+		return this.context;
+	}
+	
+	public boolean isLeftKeyPressed() {
+		return this.leftKeyPressed;
+	}
+	
+	public boolean isRightKeyPressed() {
+		return this.rightKeyPressed;
+	}
+}
