@@ -9,7 +9,9 @@ public class SpaceShip extends Ship{
 	
 	public SpaceShip() {
 		super();
-		this.image = new Image("spaceship.png", 30, 23, false, false);
+		this.width = 38;
+		this.height = 30;
+		this.image = new Image("spaceship.png", this.width, this.height, false, false);
 	}
 	
 	public void draw(GraphicsContext context) {

@@ -1,4 +1,4 @@
-package gameLogic;
+package game;
 
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -14,9 +14,9 @@ import javafx.stage.Stage;
 public class GameWindow extends Application{
 
 	private String titleText = "Space Invaders";
-	private final int defaultSizeX = 700;
-	private final int defaultSizeY = 600;
-	private final Color defaultBackgroudColor = Color.GRAY;
+	private final int defaultSizeX = 600;
+	private final int defaultSizeY = 500;
+	private final Color defaultBackgroudColor = Color.DARKGRAY;
 	
 	private GraphicsContext context;
 	private Canvas canvas;
@@ -114,6 +114,11 @@ public class GameWindow extends Application{
 	public double getOffsetY() {
 		return offsetY;
 	}
+
+	public Color getDefaultBackgroudColor() {
+		return defaultBackgroudColor;
+	}
+	
 	
 	
 }

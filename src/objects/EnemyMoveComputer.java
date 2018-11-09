@@ -2,7 +2,7 @@ package objects;
 
 import java.util.ArrayList;
 
-import gameLogic.GameWindow;
+import game.GameWindow;
 
 public class EnemyMoveComputer {
 	

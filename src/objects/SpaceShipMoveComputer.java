@@ -1,6 +1,6 @@
 package objects;
 
-import gameLogic.GameWindow;
+import game.GameWindow;
 
 public class SpaceShipMoveComputer {
 
@@ -12,17 +12,16 @@ public class SpaceShipMoveComputer {
 		this.window = window;
 	}
 	
-	/*private boolean verifyBorder(){
-		boolean border = spaceShip.checkBorders(window.getWindowWidth(), window.getWindowHeight(), window.getOffsetX(), window.getOffsetY());
-		
-	}*/
-	
 	public void move(boolean left, boolean right) {
 		if(left) {
-			this.spaceShip.setPosition(this.spaceShip.getPosX() - 1, this.spaceShip.getPosY());
+			if(!spaceShip.checkLeftBorder(this.window.getOffsetX())) {
+				this.spaceShip.setPosition(this.spaceShip.getPosX() - 2, this.spaceShip.getPosY());
+			}
 		}
 		else if(right) {
-			this.spaceShip.setPosition(this.spaceShip.getPosX() + 1, this.spaceShip.getPosY());
+			if(!spaceShip.checkRightBorder(this.window.getWindowWidth(), this.window.getOffsetX())) {
+				this.spaceShip.setPosition(this.spaceShip.getPosX() + 2, this.spaceShip.getPosY());
+			}
 		}
 	}
 }

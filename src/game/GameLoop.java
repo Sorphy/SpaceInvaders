@@ -1,4 +1,4 @@
-package gameLogic;
+package game;
 
 import java.util.ArrayList;
 
@@ -40,6 +40,7 @@ public class GameLoop extends AnimationTimer{
 	
 	
 	private void clearSpace() {
+		this.window.getGraphicsContext().setFill(this.window.getDefaultBackgroudColor());
 		this.window.getGraphicsContext().fillRect(0, 0, this.window.getWindowWidth(), this.window.getWindowHeight());
 	}
 	
@@ -49,12 +50,11 @@ public class GameLoop extends AnimationTimer{
 		}
 	}
 	
-
 	private ArrayList<IDrawable> generateObjects(){
 
 		ArrayList<IDrawable> tmp = new ArrayList<IDrawable>();
 		
-		double posX = 180;	//offest
+		double posX = 100;	//offest
 		double posY = 100;
 		
 		double gapX = ((window.getWindowWidth() - (2 * posX)) - (6 * 30)) / 5;
@@ -73,7 +73,7 @@ public class GameLoop extends AnimationTimer{
 				
 				posX += enemy.getWidth() + gapX;
 			}	
-			posX = 180;
+			posX = 100;
 			posY += enemy.getHeight() + gapY; 
 		}
 		
