@@ -3,10 +3,12 @@ package gameLogic;
 import java.util.ArrayList;
 
 import javafx.animation.AnimationTimer;
+import objects.EnemyMoveComputer;
 import objects.EnemyShip;
 import objects.IDrawable;
 import objects.IMovable;
 import objects.SpaceShip;
+import objects.SpaceShipMoveComputer;
 import utils.LevelInfo;
 
 public class GameLoop extends AnimationTimer{
@@ -14,32 +16,26 @@ public class GameLoop extends AnimationTimer{
 	private GameWindow window;
 	private LevelInfo level;
 	private ArrayList<IDrawable> objects;
-	private double direction;
-	private final double offsetX = 20;
-	private final double offsetY = 10;
+	
+	private EnemyMoveComputer enemyMoveComputer;
+	private SpaceShipMoveComputer spaceShipMoveComputer;
 	
 	
 	public GameLoop(GameWindow window) {
 		this.window = window;
 		this.level = new LevelInfo();
 		this.objects = this.generateObjects();
-		this.direction = this.level.getSpeed();
-		
+		this.enemyMoveComputer = new EnemyMoveComputer(this.getAllEnemies(), this.window, this.level.getSpeed());
+		this.spaceShipMoveComputer = new SpaceShipMoveComputer(this.getSpaceShip(), this.window);
 	}
 	
 	@Override
 	public void handle(long arg0) {
 		
 		this.clearSpace();
-		
-		//Changing directions of enemy ships
-		if(!this.verifyDirection()){
-			this.direction = -this.direction;
-			this.move(this.direction, 10);	
-		}
-		else {
-			this.move(this.direction, 0);
-		}
+		this.enemyMoveComputer.move();
+		this.spaceShipMoveComputer.move(this.window.isLeftKeyPressed(), this.window.isRightKeyPressed());
+		this.draw();
 	}
 	
 	
@@ -47,53 +43,12 @@ public class GameLoop extends AnimationTimer{
 		this.window.getGraphicsContext().fillRect(0, 0, this.window.getWindowWidth(), this.window.getWindowHeight());
 	}
 	
-	
-	//If any enemy is on the border, it return false
-	private boolean verifyDirection() {
-		boolean border = true;
-		for(IDrawable object : this.objects) {
-			if(object instanceof EnemyShip) {
-				border = (((EnemyShip) object).checkBorders(this.window.getWindowWidth(), 
-						this.window.getWindowHeight(), this.offsetX, this.offsetY));
-				if(!border) { break; }
-				
-			}
-		}
-		return border;
-	}
-	
-	//
-	private void move(double direction, int y) {
-		for(IDrawable object : this.objects) {
-			if(object instanceof EnemyShip) {
-				EnemyShip ship = (EnemyShip)object;
-				ship.setPosition(ship.getPosX() + direction, ship.getPosY() + y);
-				//ship.draw(this.window.getGraphicsContext());
-			}
-			if(object instanceof SpaceShip) {
-				SpaceShip ship = (SpaceShip)object;
-				if(window.isLeftKeyPressed()) {
-					if(ship.checkBorders(this.window.getWindowWidth(), this.window.getWindowHeight(), this.offsetX, this.offsetY)) {
-						ship.setPosition(ship.getPosX() - 1, ship.getPosY()); 
-					}
-					else {
-						ship.setPosition(ship.getPosX() + 1, ship.getPosY());
-					}
-				}
-				else if (window.isRightKeyPressed()) { 
-					if(ship.checkBorders(this.window.getWindowWidth(), this.window.getWindowHeight(), this.offsetX, this.offsetY)) {
-						ship.setPosition(ship.getPosX() + 1, ship.getPosY()); 
-					}
-					else {
-						ship.setPosition(ship.getPosX() - 1, ship.getPosY());
-					}
-				}
-			}
-			
+	private void draw() {
+		for(IDrawable object : objects) {
 			object.draw(this.window.getGraphicsContext());
-			
 		}
 	}
+	
 
 	private ArrayList<IDrawable> generateObjects(){
 
@@ -128,5 +83,33 @@ public class GameLoop extends AnimationTimer{
 		return tmp;
 	}
 	
+	public ArrayList<IMovable> getAllMovableObjects(){
+		ArrayList<IMovable> output = new ArrayList<IMovable>();
+		for(IDrawable object : objects) {
+			if(object instanceof IMovable) {
+				output.add(((IMovable) object));
+			}
+		}
+		return output;
+	}
+	
+	public ArrayList<IMovable> getAllEnemies(){
+		ArrayList<IMovable> output = new ArrayList<IMovable>();
+		for(IDrawable object : objects) {
+			if(object instanceof EnemyShip) {
+				output.add(((IMovable) object));
+			}
+		}
+		return output;	
+	}
+	
+	public IMovable getSpaceShip() {
+		for(IDrawable object : objects) {
+			if(object instanceof SpaceShip) {
+				return (IMovable)object;
+			}
+		}
+		return null;
+	}
 	
 }

@@ -24,6 +24,8 @@ public class GameWindow extends Application{
 	private boolean leftKeyPressed;
 	private boolean rightKeyPressed;
 	
+	private final double offsetX = 20;
+	private final double offsetY = 10;
 	
 	
 	@Override
@@ -104,4 +106,14 @@ public class GameWindow extends Application{
 	public boolean isRightKeyPressed() {
 		return this.rightKeyPressed;
 	}
+
+	public double getOffsetX() {
+		return offsetX;
+	}
+
+	public double getOffsetY() {
+		return offsetY;
+	}
+	
+	
 }
