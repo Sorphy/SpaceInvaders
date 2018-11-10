@@ -6,6 +6,9 @@ public interface IMovable {
 	
 	public boolean checkLeftBorder(double offset);
 	public boolean checkRightBorder(double sizeX, double offset);
+	public boolean checkTopBorder(double offset);
+	public boolean checkBottomBorder(double sizeY, double offset);
+	
 	
 	public double getPosX();
 	public double getPosY();

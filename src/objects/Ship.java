@@ -9,21 +9,15 @@ public abstract class Ship implements IMovable, IDrawable{
 	protected double width;
 	protected double height;
 	
-	public Ship() {
+	/*public Ship() {
 		this.posX = 0;
 		this.posY = 0;
 		this.width = 30;
 		this.height = 23;
-	};
+	};*/
 
 	@Override
 	public abstract void draw(GraphicsContext context);
-
-	/*@Override
-	public void moveTo(double x, double y) {
-		this.setPosition(x, y);
-		
-	}*/
 
 	@Override
 	public boolean checkBorders(double sizeX, double sizeY, double offsetX, double offsetY) {
@@ -40,6 +34,14 @@ public abstract class Ship implements IMovable, IDrawable{
 	
 	public boolean checkRightBorder(double sizeX, double offset) {
 		return this.posX + this.width >= sizeX - offset;
+	}
+	
+	public boolean checkTopBorder(double offset) {
+		return this.posY <= offset;
+	}
+	
+	public boolean checkBottomBorder(double sizeY, double offset) {
+		return this.posY + this.height >= sizeY - offset;
 	}
 	
 	public void setPosX(double x) {

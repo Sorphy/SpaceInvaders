@@ -6,19 +6,15 @@ import game.GameWindow;
 
 public class EnemyMoveComputer {
 	
-	private double direction;
-	
-	private ArrayList<IMovable> objects;
+	private double direction = 0.0;
 	private GameWindow window;	
 	
-	public EnemyMoveComputer(ArrayList<IMovable> objects, GameWindow window, double speed) {
-		this.objects = objects;
+	public EnemyMoveComputer(GameWindow window) {
 		this.window = window;
-		this.direction = speed;
 	}
 	
-	private boolean verifyDirection() {
-		for(IMovable object : this.objects) {
+	private boolean verifyDirection(ArrayList<IMovable> objects) {
+		for(IMovable object : objects) {
 				if(!(((EnemyShip) object).checkBorders(this.window.getWindowWidth(), 
 						this.window.getWindowHeight(), this.window.getOffsetX(), this.window.getOffsetY()))) {
 					return false;
@@ -27,21 +23,22 @@ public class EnemyMoveComputer {
 		return true;
 	}
 
-	private void internalMove(double direction, double y) {
-		for(IMovable object : this.objects) {
-			EnemyShip ship = (EnemyShip)object;
-			ship.setPosition(ship.getPosX() + direction, ship.getPosY() + y);
-			ship.draw(this.window.getGraphicsContext());
+	private void internalMove(ArrayList<IMovable> objects, double direction, double y) {
+		for(IMovable object : objects) {
+			object.setPosition(object.getPosX() + direction, object.getPosY() + y);
 		}
 	}
 
-	public void move() {
-		if(!this.verifyDirection()){
+	public void move(ArrayList<IMovable> objects, double speed) {
+		if(this.direction == 0.0) {
+			this.direction = speed;
+		}
+		if(!this.verifyDirection(objects)){
 			this.direction = -this.direction;
-			this.internalMove(this.direction, 10);	
+			this.internalMove(objects, this.direction, 10);	
 		}
 		else {
-			this.internalMove(this.direction, 0);
+			this.internalMove(objects, this.direction, 0);
 		}
 	}
 }

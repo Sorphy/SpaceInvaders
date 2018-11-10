@@ -10,6 +10,8 @@ public class EnemyShip extends Ship{
 	
 	public EnemyShip() {
 		super();
+		this.width = 30;
+		this.height = 23;
 		this.image = new Image("space.png", this.width, this.height, false, false);
 		this.point = 100;
 	}	

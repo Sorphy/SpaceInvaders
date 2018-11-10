@@ -23,6 +23,7 @@ public class GameWindow extends Application{
 	
 	private boolean leftKeyPressed;
 	private boolean rightKeyPressed;
+	private boolean spaceKeyPressed;
 	
 	private final double offsetX = 20;
 	private final double offsetY = 10;
@@ -55,6 +56,10 @@ public class GameWindow extends Application{
 					leftKeyPressed = true;
 					System.out.println("Left key pressed");
 				}
+				if(e.getCode() == KeyCode.SPACE) {
+					spaceKeyPressed = true;
+					System.out.println("Space key pressed");	
+				}
 			}
 		});
      
@@ -66,6 +71,9 @@ public class GameWindow extends Application{
         		if(e.getCode() == KeyCode.LEFT) {
         				leftKeyPressed = false;
         		}
+				if(e.getCode() == KeyCode.SPACE) {
+					spaceKeyPressed = false;
+				}
         	}
         });
 		
@@ -117,6 +125,10 @@ public class GameWindow extends Application{
 
 	public Color getDefaultBackgroudColor() {
 		return defaultBackgroudColor;
+	}
+
+	public boolean isSpaceKeyPressed() {
+		return spaceKeyPressed;
 	}
 	
 	
