@@ -39,8 +39,6 @@ public class GameLoop extends AnimationTimer{
 	@Override
 	public void handle(long arg0) {
 		
-
-		
 		this.clearSpace();
 		
 		this.checkColision();
