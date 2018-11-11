@@ -38,18 +38,22 @@ public class GameLoop extends AnimationTimer{
 	@Override
 	public void handle(long arg0) {
 		
+		ArrayList<IMovable> lasers = this.getLasers();
+		IMovable spaceShip = this.getSpaceShip();
+		ArrayList<IMovable> enemies = this.getAllEnemies();
+		
 		this.clearSpace();
 		
 		//Create sapceShip laser
-		if(this.window.isSpaceKeyPressed() && !this.existsSpaceShipLaser(this.getLasers())) {
-			this.createSpaceShipLaser(this.getSpaceShip());
+		if(this.window.isSpaceKeyPressed() && !this.existsSpaceShipLaser(lasers)) {
+			this.createSpaceShipLaser(spaceShip);
 		}
 		
-		this.generateEnemyLasers(this.getAllEnemies());
+		this.generateEnemyLasers(enemies);
 		
-		this.enemyMoveComputer.move(this.getAllEnemies(), this.level.getSpeed());
-		this.spaceShipMoveComputer.move(this.getSpaceShip(), this.window.isLeftKeyPressed(), this.window.isRightKeyPressed());
-		this.laserMoveComputer.move(this.getLasers(), 3);
+		this.enemyMoveComputer.move(enemies, this.level.getSpeed());
+		this.spaceShipMoveComputer.move(spaceShip, this.window.isLeftKeyPressed(), this.window.isRightKeyPressed());
+		this.laserMoveComputer.move(lasers, 3);
 		this.draw();
 	}
 	

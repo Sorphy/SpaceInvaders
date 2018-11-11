@@ -11,8 +11,8 @@ public class LevelInfo {
 	private int countInLine;
 	
 	public LevelInfo() {
-		this.fireRate = 3000;
-		this.speed = 1.2;
+		this.fireRate = 2000;
+		this.speed = 2;
 		this.enemyCount = 12;
 		this.countInLine = 6;
 	}
