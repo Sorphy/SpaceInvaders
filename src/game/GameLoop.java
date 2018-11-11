@@ -1,6 +1,7 @@
 package game;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javafx.animation.AnimationTimer;
 import objects.EnemyMoveComputer;
@@ -38,11 +39,15 @@ public class GameLoop extends AnimationTimer{
 	@Override
 	public void handle(long arg0) {
 		
+
+		
+		this.clearSpace();
+		
+		this.checkColision();
+		
 		ArrayList<IMovable> lasers = this.getLasers();
 		IMovable spaceShip = this.getSpaceShip();
 		ArrayList<IMovable> enemies = this.getAllEnemies();
-		
-		this.clearSpace();
 		
 		//Create sapceShip laser
 		if(this.window.isSpaceKeyPressed() && !this.existsSpaceShipLaser(lasers)) {
@@ -131,6 +136,40 @@ public class GameLoop extends AnimationTimer{
 		return tmp;
 	}
 	
+	private void checkColision() {
+		ArrayList<IDrawable> del = new ArrayList<IDrawable>();
+		
+		Iterator<IDrawable> objectsIterator = this.objects.iterator();
+		while(objectsIterator.hasNext()) {
+			IDrawable object = objectsIterator.next();
+			Iterator<IDrawable> objectsIterator2 = this.objects.iterator();
+			 while(objectsIterator2.hasNext()) {
+				IDrawable object2 = objectsIterator2.next();
+				
+				if(object == object2) { continue; }
+				if(object2.getPosX() <= object.getPosX() + object.getWidth() && object2.getPosX() + object2.getWidth() >= object.getPosX()) {
+					if(object2.getPosY() <= object.getPosY() + object.getHeight() && object2.getPosY() + object2.getHeight() >= object.getPosY()) {
+						if(object instanceof Laser && object2 instanceof EnemyShip) {
+							if(((Laser)object).getType() == "enemy") {
+								continue;
+							}
+						}
+						if(object2 instanceof Laser && object instanceof EnemyShip) {
+							if(((Laser)object2).getType() == "enemy") {
+								continue;
+							}
+						}
+						
+						del.add(object);
+						del.add(object2);
+						break;
+					}
+				}
+			 }	
+		}
+		this.objects.removeAll(del);
+	}
+	
 	public ArrayList<IMovable> getAllMovableObjects(){
 		ArrayList<IMovable> output = new ArrayList<IMovable>();
 		for(IDrawable object : objects) {
@@ -172,4 +211,6 @@ public class GameLoop extends AnimationTimer{
 		}
 		return lasers;
 	}
+
+	
 }
