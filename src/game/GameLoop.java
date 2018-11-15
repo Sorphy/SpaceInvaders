@@ -12,6 +12,7 @@ import objects.Laser;
 import objects.LaserMoveComputer;
 import objects.SpaceShip;
 import objects.SpaceShipMoveComputer;
+import objects.Wall;
 import utils.LevelInfo;
 import utils.RandomGenerator;
 
@@ -58,6 +59,7 @@ public class GameLoop extends AnimationTimer{
 		this.spaceShipMoveComputer.move(spaceShip, this.window.isLeftKeyPressed(), this.window.isRightKeyPressed());
 		this.laserMoveComputer.move(lasers, 3);
 		this.draw();
+		
 	}
 	
 	private void createSpaceShipLaser(IMovable s) {
@@ -107,6 +109,7 @@ public class GameLoop extends AnimationTimer{
 		double posX = 100;	//offest
 		double posY = 100;
 		
+		//**************************Generating enemies**********************************
 		double gapX = ((window.getWindowWidth() - (2 * posX)) - (6 * 30)) / 5;
 		double gapY = 20;
 		
@@ -131,10 +134,20 @@ public class GameLoop extends AnimationTimer{
 		spaceShip.setPosition(this.window.getWindowWidth() / 2 - spaceShip.getWidth() / 2, this.window.getWindowHeight() - 100);
 		tmp.add(spaceShip);
 		
+		
+		//**************************Generating walls*******************************
+		gapX = 50;
+		for(int l = 0; l < 5; l++) {
+			IDrawable w = new Wall(gapX, 200);
+			tmp.add(w);
+			gapX += 11;
+		}
+		
 		return tmp;
 	}
 	
 	private void checkColision() {
+		//TODO: Horrible code. When everything will be ok. Alternate this!!!!!!!!
 		ArrayList<IDrawable> del = new ArrayList<IDrawable>();
 		
 		Iterator<IDrawable> objectsIterator = this.objects.iterator();
@@ -163,7 +176,12 @@ public class GameLoop extends AnimationTimer{
 						break;
 					}
 				}
-			 }	
+				
+				if(object.getPosY() + object.getHeight() < 0 || object.getPosY() > this.window.getWindowHeight()) {
+					del.add(object);
+				}
+				
+			 }				 
 		}
 		this.objects.removeAll(del);
 	}

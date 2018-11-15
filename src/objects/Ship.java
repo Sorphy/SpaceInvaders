@@ -8,13 +8,6 @@ public abstract class Ship implements IMovable, IDrawable{
 	private double posY;
 	protected double width;
 	protected double height;
-	
-	/*public Ship() {
-		this.posX = 0;
-		this.posY = 0;
-		this.width = 30;
-		this.height = 23;
-	};*/
 
 	@Override
 	public abstract void draw(GraphicsContext context);

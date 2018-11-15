@@ -27,7 +27,7 @@ public class Laser implements IMovable, IDrawable{
 
 	@Override
 	public boolean checkBorders(double sizeX, double sizeY, double offsetX, double offsetY) {
-		return this.checkLeftBorder(offsetY) && 
+		return this.checkLeftBorder(offsetX) &&
 			   this.checkRightBorder(sizeX, offsetX) && 
 			   this.checkTopBorder(offsetY) && 
 			   this.checkBottomBorder(sizeY, offsetY);
