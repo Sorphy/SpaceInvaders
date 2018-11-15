@@ -57,7 +57,7 @@ public class GameLoop extends AnimationTimer{
 		
 		this.enemyMoveComputer.move(enemies, this.level.getSpeed());
 		this.spaceShipMoveComputer.move(spaceShip, this.window.isLeftKeyPressed(), this.window.isRightKeyPressed());
-		this.laserMoveComputer.move(lasers, 3);
+		this.laserMoveComputer.move(lasers, 5);
 		this.draw();
 		
 	}
@@ -136,12 +136,25 @@ public class GameLoop extends AnimationTimer{
 		
 		
 		//**************************Generating walls*******************************
-		gapX = 50;
-		for(int l = 0; l < 5; l++) {
-			IDrawable w = new Wall(gapX, 200);
-			tmp.add(w);
-			gapX += 11;
+		int defaultGapX = 130;
+		int defaultGapY = 10;
+		gapX = defaultGapX;
+		gapY = defaultGapY;
+		IDrawable w = null;
+		for(int k = 0; k < 3; k++) {
+			for(int z = 0; z < 5; z++) {
+				for(int l = 0; l < 5; l++) {
+					w = new Wall(gapX, this.window.getWindowHeight() - 50 - 150 + gapY);
+					tmp.add(w);
+					gapX += w.getWidth();
+				}	
+				gapX = defaultGapX * (k + 1) + (w.getWidth() * k);
+				gapY += w.getHeight();
+			}
+			gapY = defaultGapY;
+			gapX += defaultGapX + w.getWidth();
 		}
+		
 		
 		return tmp;
 	}
@@ -158,8 +171,8 @@ public class GameLoop extends AnimationTimer{
 				IDrawable object2 = objectsIterator2.next();
 				
 				if(object == object2) { continue; }
-				if(object2.getPosX() <= object.getPosX() + object.getWidth() && object2.getPosX() + object2.getWidth() >= object.getPosX()) {
-					if(object2.getPosY() <= object.getPosY() + object.getHeight() && object2.getPosY() + object2.getHeight() >= object.getPosY()) {
+				if(object2.getPosX() < object.getPosX() + object.getWidth() && object2.getPosX() + object2.getWidth() > object.getPosX()) {
+					if(object2.getPosY() < object.getPosY() + object.getHeight() && object2.getPosY() + object2.getHeight() > object.getPosY()) {
 						if(object instanceof Laser && object2 instanceof EnemyShip) {
 							if(((Laser)object).getType() == "enemy") {
 								continue;

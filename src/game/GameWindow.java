@@ -15,7 +15,7 @@ public class GameWindow extends Application{
 
 	private String titleText = "Space Invaders";
 	private final int defaultSizeX = 600;
-	private final int defaultSizeY = 500;
+	private final int defaultSizeY = 800;
 	private final Color defaultBackgroudColor = Color.DARKGRAY;
 	
 	private GraphicsContext context;
