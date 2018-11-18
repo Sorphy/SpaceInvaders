@@ -1,6 +1,7 @@
 package game;
 
 import java.net.URL;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -20,6 +21,9 @@ public class EndPageController implements Initializable{
 	private Label scoreLabel;
 	
 	@FXML
+	private Label errorLabel;
+	
+	@FXML
 	private TextField nameInput;
 	
 	
@@ -33,6 +37,15 @@ public class EndPageController implements Initializable{
 		if(nameInput.getText().isEmpty()) {return;}
 		try {
 			FileWriterHandler fileHandler = new FileWriterHandler();
+			
+			Map<String, String> scores = fileHandler.parse(fileHandler.read());
+			for(Map.Entry<String, String> score : scores.entrySet()) {
+				if(score.getKey().equals(nameInput.getText())){
+					this.errorLabel.setText("Choose another name.");
+					return;
+				}
+			}
+			
 			fileHandler.write(nameInput.getText() + ";" + this.loop.getPoints());
 		}catch(Exception e) {
 			System.out.println(e.getMessage());

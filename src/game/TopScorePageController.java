@@ -8,6 +8,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
@@ -17,8 +18,19 @@ import utils.FileWriterHandler;
 
 public class TopScorePageController implements Initializable{
 
+	private GameWindow window;
+	
+	public TopScorePageController(GameWindow window) {
+		this.window = window;
+	}
+	
 	@FXML
 	private TableView<Map.Entry<String, String>> scoreTable;
+	
+	@FXML
+	public void back(ActionEvent event) {
+		this.window.initWelcomePage();
+	}
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -55,6 +67,7 @@ public class TopScorePageController implements Initializable{
 	       /* final TableView<Map.Entry<String,String>> table = new TableView<>(items);
 */
 	        this.scoreTable.setItems(items);
+	        this.scoreTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 	        this.scoreTable.getColumns().setAll(nameColumn, pointsColumn);
 			
 			

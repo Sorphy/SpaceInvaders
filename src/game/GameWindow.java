@@ -34,22 +34,6 @@ public class GameWindow extends Application{
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		
-		/*try {
-			FileWriterHandler writerHandler = new FileWriterHandler();
-			writerHandler.write("Ondra;1100");
-			writerHandler.write("Lucie;200");
-			
-			System.out.println(writerHandler.read());
-			
-			Map<String, Integer> score = writerHandler.parse(writerHandler.read());
-			
-			for(Map.Entry<String, Integer> entry : score.entrySet()) {
-				System.out.println("Name: " + entry.getKey() + " -> " + entry.getValue());
-			}	
-		}catch(Exception e) {
-			System.out.println(e.getMessage());
-		}*/
-		
 		primaryStage.setTitle(this.titleText);
 		primaryStage.setResizable(false);
 		primaryStage.setWidth(defaultSizeX);
@@ -75,6 +59,8 @@ public class GameWindow extends Application{
             // Show the scene containing the root layout.
             Scene scene = new Scene(rootLayout);
             this.primaryStage.setScene(scene);
+            this.primaryStage.setWidth(600);
+            this.primaryStage.setHeight(500);
             this.primaryStage.show();
             
         } catch (IOException e) {
@@ -93,6 +79,8 @@ public class GameWindow extends Application{
             // Show the scene containing the root layout.
             Scene scene = new Scene(rootLayout);
             this.primaryStage.setScene(scene);
+            this.primaryStage.setWidth(600);
+            this.primaryStage.setHeight(500);
             this.primaryStage.show();
             
         } catch (IOException e) {
@@ -105,7 +93,7 @@ public class GameWindow extends Application{
             // Load root layout from fxml file.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("TopScorePage.fxml"));
-            loader.setController(new TopScorePageController());
+            loader.setController(new TopScorePageController(this));
             VBox rootLayout = (VBox) loader.load();
             
             // Show the scene containing the root layout.

@@ -28,6 +28,9 @@ public class WelcomePageController implements Initializable{
 		Group root = new Group();
 		root.getChildren().add(canvas);
 		
+		this.window.primaryStage.setWidth(this.window.getWindowWidth());
+		this.window.primaryStage.setHeight(this.window.getWindowHeight());
+		
 		Scene scene = new Scene(root);
 		this.window.primaryStage.setScene(scene);
 
