@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="TOP_CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/8.0.181" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label text="Space Invaders">
+         <font>
+            <Font size="40.0" />
+         </font>
+      </Label>
+      <Button fx:id="startGameButton" mnemonicParsing="false" onAction="#startGame" text="Start game">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Button>
+      <Button fx:id="topScoreButton" mnemonicParsing="false" onAction="#topScore" text="Top score">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Button>
+      <Button fx:id="endButton" mnemonicParsing="false" onAction="#end" prefHeight="78.0" prefWidth="204.0" text="End">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Button>
+   </children>
+   <padding>
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+   </padding>
+</VBox>

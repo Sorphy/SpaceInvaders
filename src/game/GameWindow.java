@@ -1,13 +1,17 @@
 package game;
 
+import java.io.IOException;
+
 import javafx.application.Application;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -20,6 +24,8 @@ public class GameWindow extends Application{
 	
 	private GraphicsContext context;
 	private Canvas canvas;
+	
+	public Stage primaryStage;
 	
 	private boolean leftKeyPressed;
 	private boolean rightKeyPressed;
@@ -38,47 +44,37 @@ public class GameWindow extends Application{
 		
 		this.canvas = new Canvas(this.defaultSizeX, this.defaultSizeY);
 		this.context = canvas.getGraphicsContext2D();
+		this.primaryStage = primaryStage;
 		
+		this.initWelcomePage();
+		
+	}
+	
+	
+	public void initWelcomePage() {
+        try {
+            // Load root layout from fxml file.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("welcomePage.fxml"));
+            loader.setController(new WelcomePageController(this, this.canvas));
+            VBox rootLayout = (VBox) loader.load();
+            
+            // Show the scene containing the root layout.
+            Scene scene = new Scene(rootLayout);
+            this.primaryStage.setScene(scene);
+            this.primaryStage.show();
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+	
+	private void initGame(Stage primaryStage) {
 		Group root = new Group();
 		root.getChildren().add(canvas);
 		
 		Scene scene = new Scene(root);
 		primaryStage.setScene(scene);
-		
-		
-		scene.setOnKeyPressed(new EventHandler<KeyEvent>(){
-			public void handle(KeyEvent e){
-				if(e.getCode() == KeyCode.RIGHT) {
-					rightKeyPressed = true;
-					System.out.println("Right key pressed");
-				}
-				if(e.getCode() == KeyCode.LEFT) {
-					leftKeyPressed = true;
-					System.out.println("Left key pressed");
-				}
-				if(e.getCode() == KeyCode.SPACE) {
-					spaceKeyPressed = true;
-					System.out.println("Space key pressed");	
-				}
-			}
-		});
-     
-        scene.setOnKeyReleased(new EventHandler<KeyEvent>(){
-        	public void handle(KeyEvent e){
-        		if(e.getCode() == KeyCode.RIGHT) {
-        				rightKeyPressed = false;
-        		}
-        		if(e.getCode() == KeyCode.LEFT) {
-        				leftKeyPressed = false;
-        		}
-				if(e.getCode() == KeyCode.SPACE) {
-					spaceKeyPressed = false;
-				}
-        	}
-        });
-		
-		
-		
 		
 		
 		//GameLoop
@@ -129,6 +125,21 @@ public class GameWindow extends Application{
 
 	public boolean isSpaceKeyPressed() {
 		return spaceKeyPressed;
+	}
+
+
+	public void setLeftKeyPressed(boolean leftKeyPressed) {
+		this.leftKeyPressed = leftKeyPressed;
+	}
+
+
+	public void setRightKeyPressed(boolean rightKeyPressed) {
+		this.rightKeyPressed = rightKeyPressed;
+	}
+
+
+	public void setSpaceKeyPressed(boolean spaceKeyPressed) {
+		this.spaceKeyPressed = spaceKeyPressed;
 	}
 	
 	
