@@ -26,11 +26,14 @@ public class GameLoop extends AnimationTimer{
 	private SpaceShipMoveComputer spaceShipMoveComputer;
 	private LaserMoveComputer laserMoveComputer;
 	
+	private int points;
+	
 	
 	public GameLoop(GameWindow window) {
 		this.window = window;
 		this.level = new LevelInfo();
 		this.objects = this.generateObjects();
+		this.points = 0;
 		
 		this.enemyMoveComputer = new EnemyMoveComputer(this.window);
 		this.spaceShipMoveComputer = new SpaceShipMoveComputer(this.window);
@@ -40,16 +43,31 @@ public class GameLoop extends AnimationTimer{
 	@Override
 	public void handle(long arg0) {
 		
-		this.clearSpace();
-		
-		this.checkColision();
 		
 		ArrayList<IMovable> lasers = this.getLasers();
 		IMovable spaceShip = this.getSpaceShip();
 		ArrayList<IMovable> enemies = this.getAllEnemies();
 		
+		//If spaceShip is destroyed, it stop game
+		if(spaceShip == null) {
+			this.stop();
+			this.window.initEndGamePage(this);
+			return;
+		}
+		
+		this.clearSpace();
+		
+		this.checkColision();
+		
+		//If there is any enemy, it create new level
+		if(enemies.isEmpty()) {
+			this.level.levelUP();
+			this.objects = null;
+			this.objects = this.generateObjects();
+		}
+		
 		//Create sapceShip laser
-		if(this.window.isSpaceKeyPressed() && !this.existsSpaceShipLaser(lasers)) {
+		if(this.window.isSpaceKeyPressed() && this.existsSpaceShipLaser(lasers)) {
 			this.createSpaceShipLaser(spaceShip);
 		}
 		
@@ -73,10 +91,12 @@ public class GameLoop extends AnimationTimer{
 	private boolean existsSpaceShipLaser(ArrayList<IMovable> objects) {
 		for(IMovable object : objects) {
 			if(object instanceof Laser && ((Laser) object).getType() == "spaceShip") {
-				return true;
+				if(object.getPosY() > this.window.getWindowHeight() - this.window.getWindowHeight() / 2) {
+					return false;
+				}
 			}
 		}
-		return false;
+		return true;
 	}
 	
 	private void generateEnemyLasers(ArrayList<IMovable> enemies) {
@@ -170,18 +190,31 @@ public class GameLoop extends AnimationTimer{
 			 while(objectsIterator2.hasNext()) {
 				IDrawable object2 = objectsIterator2.next();
 				
-				if(object == object2) { continue; }
+				if(object.equals(object2)) { continue; }
 				if(object2.getPosX() < object.getPosX() + object.getWidth() && object2.getPosX() + object2.getWidth() > object.getPosX()) {
 					if(object2.getPosY() < object.getPosY() + object.getHeight() && object2.getPosY() + object2.getHeight() > object.getPosY()) {
 						if(object instanceof Laser && object2 instanceof EnemyShip) {
 							if(((Laser)object).getType() == "enemy") {
 								continue;
 							}
+							
+							if(((Laser)object).getType() == "spaceShip") {
+								this.points += ((EnemyShip)object2).getPoint();
+							}
+							
 						}
 						if(object2 instanceof Laser && object instanceof EnemyShip) {
 							if(((Laser)object2).getType() == "enemy") {
 								continue;
 							}
+						}
+						
+						
+						
+						
+						if((object instanceof EnemyShip && object2 instanceof Wall) || (object2 instanceof EnemyShip && object instanceof Wall ) ) {
+							this.stop();
+							this.window.initEndGamePage(this);
 						}
 						
 						del.add(object);
@@ -239,6 +272,11 @@ public class GameLoop extends AnimationTimer{
 			}
 		}
 		return lasers;
+	}
+
+	
+	public int getPoints() {
+		return points;
 	}
 
 	

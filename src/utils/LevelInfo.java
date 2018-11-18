@@ -1,9 +1,6 @@
 package utils;
 
 public class LevelInfo {
-	public enum status{
-		WON, LOST, PAUSE
-	}
 	
 	private int fireRate;
 	private double speed;
@@ -22,23 +19,23 @@ public class LevelInfo {
 	}
 
 	public void setFireRate(int fireRate) {
-		this.fireRate = fireRate;
+		if(this.fireRate > 1000) {
+			this.fireRate = fireRate;
+		}
 	}
 
 	public double getSpeed() {
 		return speed;
 	}
 
-	public void setSpeed(int speed) {
-		this.speed = speed;
+	public void setSpeed(double speed) {
+		if(this.speed < 5) {
+			this.speed = speed;
+		}
 	}
 
 	public int getEnemyCount() {
 		return enemyCount;
-	}
-
-	public void setEnemyCount(int enemyCount) {
-		this.enemyCount = enemyCount;
 	}
 	
 	public void addEnemyCount() {
@@ -51,7 +48,11 @@ public class LevelInfo {
 		return countInLine;
 	}
 
-	
+	public void levelUP() {
+		this.addEnemyCount();
+		this.setSpeed(this.getSpeed() + 0.5);
+		this.setFireRate(this.getFireRate() - 100);
+	}
 	
 	
 	

@@ -30,6 +30,9 @@ public class WelcomePageController implements Initializable{
 		
 		Scene scene = new Scene(root);
 		this.window.primaryStage.setScene(scene);
+
+		
+		GameLoop loop = new GameLoop(this.window);
 		
 		
 		scene.setOnKeyPressed(new EventHandler<KeyEvent>(){
@@ -42,6 +45,12 @@ public class WelcomePageController implements Initializable{
 	    		}
 				if(e.getCode() == KeyCode.SPACE) {
 					window.setSpaceKeyPressed(true);
+				}
+				if(e.getCode() == KeyCode.P) {
+					loop.stop();
+				}
+				if(e.getCode() == KeyCode.C) {
+					loop.start();
 				}
 			}
 		});
@@ -62,19 +71,18 @@ public class WelcomePageController implements Initializable{
 		
 		
 		//GameLoop
-		
-		GameLoop loop = new GameLoop(this.window);
 		loop.start();
+		
 	}
 	
 	@FXML
 	private void topScore(ActionEvent event) {
-		System.out.println("TOP");
+		this.window.initTopScorePage();
 	}
 	
 	@FXML
 	private void end(ActionEvent event) {
-		System.out.println("End");
+		this.window.primaryStage.close();
 	}
 
 	@Override

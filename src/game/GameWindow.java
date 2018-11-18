@@ -3,14 +3,10 @@ package game;
 import java.io.IOException;
 
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -19,7 +15,7 @@ public class GameWindow extends Application{
 
 	private String titleText = "Space Invaders";
 	private final int defaultSizeX = 600;
-	private final int defaultSizeY = 800;
+	private final int defaultSizeY = 700;
 	private final Color defaultBackgroudColor = Color.DARKGRAY;
 	
 	private GraphicsContext context;
@@ -37,6 +33,23 @@ public class GameWindow extends Application{
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+		
+		/*try {
+			FileWriterHandler writerHandler = new FileWriterHandler();
+			writerHandler.write("Ondra;1100");
+			writerHandler.write("Lucie;200");
+			
+			System.out.println(writerHandler.read());
+			
+			Map<String, Integer> score = writerHandler.parse(writerHandler.read());
+			
+			for(Map.Entry<String, Integer> entry : score.entrySet()) {
+				System.out.println("Name: " + entry.getKey() + " -> " + entry.getValue());
+			}	
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
+		}*/
+		
 		primaryStage.setTitle(this.titleText);
 		primaryStage.setResizable(false);
 		primaryStage.setWidth(defaultSizeX);
@@ -69,22 +82,40 @@ public class GameWindow extends Application{
         }
 	}
 	
-	private void initGame(Stage primaryStage) {
-		Group root = new Group();
-		root.getChildren().add(canvas);
-		
-		Scene scene = new Scene(root);
-		primaryStage.setScene(scene);
-		
-		
-		//GameLoop
-		
-		GameLoop loop = new GameLoop(this);
-		loop.start();
-		
-		//GameLoop
-		
-		primaryStage.show();
+	public void initEndGamePage(GameLoop loop) {
+		try {
+            // Load root layout from fxml file.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("endPage.fxml"));
+            loader.setController(new EndPageController(this, loop));
+            VBox rootLayout = (VBox) loader.load();
+            
+            // Show the scene containing the root layout.
+            Scene scene = new Scene(rootLayout);
+            this.primaryStage.setScene(scene);
+            this.primaryStage.show();
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+	
+	public void initTopScorePage() {
+		try {
+            // Load root layout from fxml file.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("TopScorePage.fxml"));
+            loader.setController(new TopScorePageController());
+            VBox rootLayout = (VBox) loader.load();
+            
+            // Show the scene containing the root layout.
+            Scene scene = new Scene(rootLayout);
+            this.primaryStage.setScene(scene);
+            this.primaryStage.show();
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 	}
 	
 	public static void main(String[] args) {
