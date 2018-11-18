@@ -50,8 +50,7 @@ public class GameLoop extends AnimationTimer{
 		
 		//If spaceShip is destroyed, it stop game
 		if(spaceShip == null) {
-			this.stop();
-			this.window.initEndGamePage(this);
+			this.endGame();
 			return;
 		}
 		
@@ -213,8 +212,7 @@ public class GameLoop extends AnimationTimer{
 						
 						
 						if((object instanceof EnemyShip && object2 instanceof Wall) || (object2 instanceof EnemyShip && object instanceof Wall ) ) {
-							this.stop();
-							this.window.initEndGamePage(this);
+							this.endGame();
 						}
 						
 						del.add(object);
@@ -279,5 +277,12 @@ public class GameLoop extends AnimationTimer{
 		return points;
 	}
 
+	private void endGame() {
+		this.stop();
+		this.window.setLeftKeyPressed(false);
+		this.window.setRightKeyPressed(false);
+		this.window.setSpaceKeyPressed(false);
+		this.window.initEndGamePage(this);
+	}
 	
 }

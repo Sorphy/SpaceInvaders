@@ -3,3 +3,6 @@ Ondra2;3900
 Ondra;4800
 BLBLA;300
 Ondra22;1800
+Ondra01;2300
+Ondra02;1300
+Kokos;900

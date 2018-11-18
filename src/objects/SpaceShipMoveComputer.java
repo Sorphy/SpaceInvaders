@@ -13,12 +13,12 @@ public class SpaceShipMoveComputer {
 	public void move(IMovable spaceShip, boolean left, boolean right) {
 		if(left) {
 			if(!spaceShip.checkLeftBorder(this.window.getOffsetX())) {
-				spaceShip.setPosition(spaceShip.getPosX() - 2, spaceShip.getPosY());
+				spaceShip.setPosition(spaceShip.getPosX() - 4, spaceShip.getPosY());
 			}
 		}
 		else if(right) {
 			if(!spaceShip.checkRightBorder(this.window.getWindowWidth(), this.window.getOffsetX())) {
-				spaceShip.setPosition(spaceShip.getPosX() + 2, spaceShip.getPosY());
+				spaceShip.setPosition(spaceShip.getPosX() + 4, spaceShip.getPosY());
 			}
 		}
 	}
