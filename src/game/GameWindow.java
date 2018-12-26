@@ -64,7 +64,7 @@ public class GameWindow extends Application{
             this.primaryStage.show();
             
         } catch (IOException e) {
-            e.printStackTrace();
+        	System.out.println("Error: " + e.getMessage());
         }
 	}
 	

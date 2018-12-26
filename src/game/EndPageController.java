@@ -35,21 +35,24 @@ public class EndPageController implements Initializable{
 	@FXML
 	public void saveScore(ActionEvent event) {
 		if(nameInput.getText().isEmpty()) {return;}
-		try {
-			FileWriterHandler fileHandler = new FileWriterHandler();
-			
+		
+		FileWriterHandler fileHandler = new FileWriterHandler();
+		
+		String content = fileHandler.read();
+		if(!content.isEmpty() && content != "") {
 			Map<String, String> scores = fileHandler.parse(fileHandler.read());
-			for(Map.Entry<String, String> score : scores.entrySet()) {
-				if(score.getKey().equals(nameInput.getText())){
-					this.errorLabel.setText("Choose another name.");
-					return;
-				}
+			if(scores != null) {
+				for(Map.Entry<String, String> score : scores.entrySet()) {
+					if(score.getKey().equals(nameInput.getText())){
+						this.errorLabel.setText("Choose another name.");
+						return;
+					}
+				}	
 			}
-			
-			fileHandler.write(nameInput.getText() + ";" + this.loop.getPoints());
-		}catch(Exception e) {
-			System.out.println(e.getMessage());
 		}
+			
+		fileHandler.write(nameInput.getText() + ";" + this.loop.getPoints());
+		
 		this.window.initWelcomePage();
 	}
 	

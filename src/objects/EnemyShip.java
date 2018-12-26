@@ -1,5 +1,8 @@
 package objects;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
@@ -12,7 +15,15 @@ public class EnemyShip extends Ship{
 		super();
 		this.width = 30;
 		this.height = 23;
-		this.image = new Image("space.png", this.width, this.height, false, false);
+		try {
+			FileInputStream img = new FileInputStream(".\\images\\space.png");
+
+			this.image = new Image(img, this.width, this.height, false, false);
+		}catch(IllegalArgumentException e) {
+			System.out.println("Error occured: " + e.getMessage());
+		} catch (FileNotFoundException e) {
+			System.out.println("Error occured: " + e.getMessage());
+	}
 		this.point = 100;
 	}	
 	

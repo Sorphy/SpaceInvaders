@@ -1,5 +1,8 @@
 package objects;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
@@ -16,7 +19,18 @@ public class Laser implements IMovable, IDrawable{
 	public Laser(String type) {
 		this.width = 5;
 		this.height = 10;
-		this.image = new Image("laser.png", this.width, this.height, false, false);
+		// "../images/laser.png"
+		try {
+			FileInputStream img = new FileInputStream(".\\images\\laser.png");
+
+			this.image = new Image(img, this.width, this.height, false, false);
+		}catch(IllegalArgumentException e) {
+			System.out.println("Error occured: " + e.getMessage());
+		} catch (FileNotFoundException e) {
+			System.out.println("Error occured: " + e.getMessage());
+	}
+		
+		
 		this.type = type;
 	}
 
