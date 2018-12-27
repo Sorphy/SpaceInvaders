@@ -1,18 +1,20 @@
-package game;
+package pages;
 
+import game.GameLoop;
+import game.GameWindow;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyEvent;
 
-public class GameController {
+public class GamePageController {
 	
 	private GameWindow window;
 	private Canvas canvas;
 	
 	
-	public GameController(GameWindow window, Canvas canvas){
+	public GamePageController(GameWindow window, Canvas canvas){
 		this.window = window;
 		this.canvas = canvas;
 	}

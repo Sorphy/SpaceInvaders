@@ -1,9 +1,10 @@
-package game;
+package pages;
 
 import java.net.URL;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import game.GameWindow;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;

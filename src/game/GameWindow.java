@@ -10,6 +10,9 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import pages.EndPageController;
+import pages.TopScorePageController;
+import pages.WelcomePageController;
 
 public class GameWindow extends Application{
 
@@ -52,7 +55,9 @@ public class GameWindow extends Application{
         try {
             // Load root layout from fxml file.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("welcomePage.fxml"));
+            loader.setLocation(getClass().getResource("/pages/welcomePage.fxml"));
+            
+            //loader.setLocation(getClass().getResource("welcomePage.fxml"));
             loader.setController(new WelcomePageController(this, this.canvas));
             VBox rootLayout = (VBox) loader.load();
             
@@ -72,7 +77,7 @@ public class GameWindow extends Application{
 		try {
             // Load root layout from fxml file.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("endPage.fxml"));
+            loader.setLocation(getClass().getResource("/pages/endPage.fxml"));
             loader.setController(new EndPageController(this, loop));
             VBox rootLayout = (VBox) loader.load();
             
@@ -92,7 +97,7 @@ public class GameWindow extends Application{
 		try {
             // Load root layout from fxml file.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("TopScorePage.fxml"));
+            loader.setLocation(getClass().getResource("/pages/TopScorePage.fxml"));
             loader.setController(new TopScorePageController(this));
             VBox rootLayout = (VBox) loader.load();
             

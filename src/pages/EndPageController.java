@@ -1,9 +1,11 @@
-package game;
+package pages;
 
 import java.net.URL;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import game.GameLoop;
+import game.GameWindow;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

@@ -179,7 +179,6 @@ public class GameLoop extends AnimationTimer{
 	}
 	
 	private void checkColision() {
-		//TODO: Horrible code. When everything will be ok. Alternate this!!!!!!!!
 		ArrayList<IDrawable> del = new ArrayList<IDrawable>();
 		
 		Iterator<IDrawable> objectsIterator = this.objects.iterator();
